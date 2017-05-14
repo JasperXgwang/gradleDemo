@@ -9,10 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PushTest {
+public class PushDemo {
 
-    public static void main(String[] args) {
-
+    public void flymePush() {
         IFlymePush push = new IFlymePush("secret");
         VarnishedMessage message = new VarnishedMessage.Builder().appId(123L).build();
         List<String> targets = new ArrayList<>();
