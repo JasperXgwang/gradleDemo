@@ -1,0 +1,23 @@
+//gradle -p api-web jettyRunWar
+description = 'The shared API for the application'
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.org.akhikhl.gretty:gretty:2.0.0"
+    }
+}
+
+apply plugin: "org.akhikhl.gretty"
+
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

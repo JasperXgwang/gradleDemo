@@ -2,4 +2,5 @@ rootProject.name = 'gradleDemo'
 include 'model'
 include 'service'
 include 'web'
+include 'api-web'
 

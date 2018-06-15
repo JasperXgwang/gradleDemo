@@ -1,3 +1,11 @@
+println name
+println group
+
+ext {
+    springVersion = "3.1.0.RELEASE"
+    emailNotification = "build@master.org"
+}
+
 //hello world  gradle -q hello
 task hello {
     doLast {
@@ -66,6 +74,33 @@ task hello4 << {
 hello4.doLast {
     println "Greetings from the $hello4.name task."
 }
+
+task task_X << {
+    println 'taskX'
+}
+
+task task_Y << {
+    description 'Copies the resource directory to the target directory.'
+    println 'taskY'
+}
+
+task_Y.mustRunAfter task_X
+
+
+task hello6 << {
+    println 'hello world'
+}
+hello6.onlyIf { !project.hasProperty('skipHello') }
+
+logger.quiet('An info log message which is always logged.')
+logger.error('An error log message.')
+logger.warn('A warning log message.')
+logger.lifecycle('A lifecycle info log message.')
+logger.info('An info log message.')
+logger.debug('A debug log message.')
+logger.trace('A trace log message.')
+
+
 /*---------------------------------------------------------------------------------------------------*/
 
 //allprojects {
