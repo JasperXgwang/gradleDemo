@@ -1,6 +1,5 @@
 package com.meizu.push;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 public class PushDemoTest {
@@ -8,7 +7,8 @@ public class PushDemoTest {
 
     @Test
     public void flymePush() throws Exception {
-        Assert.assertEquals(1, 1);
+        PushDemo pushDemo = new PushDemo();
+        pushDemo.flymePush();
     }
 
 }

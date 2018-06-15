@@ -1,8 +1,99 @@
-allprojects {
+//hello world  gradle -q hello
+task hello {
+    doLast {
+        println("hello world")
+    }
+}
+
+task hello2 << {
+    println("hello world2")
+}
+
+task upper << {
+    String someString = 'mY_nAmE'
+    println "Original: " + someString
+    println "Upper case: " + someString.toUpperCase()
+}
+
+task count << {
+    4.times { print "$it " }
+}
+
+//任务依赖
+task intro(dependsOn: hello) << {
+    println "I'm Gradle"
+}
+
+task taskX(dependsOn: 'taskY') << {
+    println 'taskX'
+}
+
+task taskY << {
+    println 'taskY'
+}
+
+//动态任务
+
+4.times { counter ->
+    task "task$counter" << {
+        println "I'm task number $counter"
+    }
+}
+//使用已经存在的任务
+task0.dependsOn task2, task3
+
+//加入行为
+task hello3 << {
+    println 'Hello Earth'
+}
+hello3.doFirst {
+    println 'Hello doFirst'
+}
+hello3.doLast {
+    println 'Hello doLast'
+}
+hello3 << {
+    println 'Hello Jupiter'
+}
+
+//短标记法
+//正如同你已经在之前的示例里看到, 有一个短标记 $ 可以访问一个存在的任务. 也就是说每个
+//任务都可以作为构建脚本的属性:
+
+task hello4 << {
+    println 'Hello world!'
+}
+hello4.doLast {
+    println "Greetings from the $hello4.name task."
+}
+/*---------------------------------------------------------------------------------------------------*/
+
+//allprojects {
+//    apply plugin: 'java'
+//    sourceCompatibility = 1.8
+//
+//    //发布
+//    apply plugin: 'maven-publish'
+//
+//    publishing {
+//        publications {
+//            myPublish(MavenPublication) {
+//                from components.java
+//            }
+//        }
+//        repositories {
+//            maven {
+//                name "myRepo"
+//                url ""
+//            }
+//        }
+//    }
+//}
+//通用配置
+subprojects {
     apply plugin: 'java'
     sourceCompatibility = 1.8
 
-    //发布
     apply plugin: 'maven-publish'
 
     publishing {
@@ -19,25 +110,76 @@ allprojects {
         }
     }
 
-}
-
-subprojects {
+    //仓库地址配置
     repositories {
-        maven {
-            url ''
-        }
         mavenLocal()
         mavenCentral()
     }
+
+    //依赖
     dependencies {
         compile group: 'com.meizu.flyme', name: 'push-server-sdk', version: '1.2.1.20170428_release'
+        compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
         testCompile group: 'junit', name: 'junit', version: '4.12'
+        testCompile group: 'org.hibernate', name: 'hibernate-core', version: '3.6.7.Final'
     }
 }
 
-repositories {
-    mavenCentral()
-}
+//repositories {
+//    mavenLocal()
+//    mavenCentral()
+//}
+
+//uploadArchives {
+//    repositories {
+//        flatDir {
+//            dirs 'repos'
+//        }
+//    }
+//}
+
+/*---------------------------------------------------------------------------------------------------*/
+//apply plugin: 'java'
+//
+//sourceCompatibility = 1.8
+//version = '1.0'
+//jar {
+//    manifest {
+//        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+//    }
+//}
+//
+//repositories {
+//    mavenLocal()
+//    mavenCentral()
+//}
+//
+//dependencies {
+//    compile group: 'com.meizu.flyme', name: 'push-server-sdk', version: '1.2.1.20170428_release'
+//    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+//    testCompile group: 'junit', name: 'junit', version: '4.12'
+//}
+//
+//test {
+//    systemProperties 'property': 'value'
+//}
+//
+//uploadArchives {
+//    repositories {
+//        flatDir {
+//            dirs 'repos'
+//        }
+//    }
+//}
+
+//定制 MANIFEST.MF 文件
+//sourceCompatibility = 1.8
+//version = '1.0'
+//jar {
+//    manifest {
+//        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+//    }
+//}
 
 //出现版本冲突，构建失败
 //configurations.all {
